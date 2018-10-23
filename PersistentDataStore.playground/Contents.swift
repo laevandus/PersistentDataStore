@@ -26,7 +26,9 @@ final class PersistentDataStore {
         queue.async {
             let url = self.url(forIdentifier: identifier)
             guard FileManager.default.fileExists(atPath: url.path) else {
-                block(nil)
+                DispatchQueue.main.async {
+                    block(nil)
+                }
                 return
             }
             do {
@@ -59,15 +61,21 @@ final class PersistentDataStore {
         queue.async(flags: .barrier) {
             let url = self.url(forIdentifier: identifier)
             guard let data = dataProvider(), !data.isEmpty else {
-                block(.noData)
+                DispatchQueue.main.async {
+                    block(.noData)
+                }
                 return
             }
             do {
                 try data.write(to: url, options: .atomic)
-                block(.success(identifier))
+                DispatchQueue.main.async {
+                    block(.success(identifier))
+                }
             }
             catch {
-                block(.failed(error))
+                DispatchQueue.main.async {
+                    block(.failed(error))
+                }
             }
         }
     }
