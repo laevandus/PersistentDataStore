@@ -106,7 +106,7 @@ extension PersistentDataStore {
     }
 
     func storeImage(_ image: UIImage, identifier: Identifier = UUID().uuidString, completionHandler handler: @escaping (Result) -> ()) {
-        storeData({ image.pngData() }, identifier: identifier, completionHandler: handler)
+        storeData({ image.jpegData(compressionQuality: 1.0) }, identifier: identifier, completionHandler: handler)
     }
 }
 
