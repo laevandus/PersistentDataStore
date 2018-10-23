@@ -124,7 +124,7 @@ do {
     
     // Using designated write function.
     persistentStore.storeData({ () -> (Data?) in
-        return image.pngData()
+        return image.jpegData(compressionQuality: 1.0)
     }) { (result) in
         switch result {
         case .success(let identifier):
@@ -138,7 +138,7 @@ do {
     
     // Using designated write function and custom identifier (rewrites data on disk if there is already data stored with that identifier).
     persistentStore.storeData({ () -> (Data?) in
-        return image.pngData()
+        return image.jpegData(compressionQuality: 1.0)
     }, identifier: "my_identifier") { (result) in
         print(result)
     }
